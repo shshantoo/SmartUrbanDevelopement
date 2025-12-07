@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f1f5f9;
+  display: flex;
+  min-height: 100vh;
+}
+
+.app {
+  display: flex;
+}
+
+.sidebar {
+  width: 260px;
+  background: #1e293b;
+  color: white;
+  height: 100vh;
+  position: fixed;
+  overflow-y: auto;
+  transition: all 0.3s;
+}
+
+.main-content {
+  flex: 1;
+  margin-left: 260px;
+  padding: 20px;
+  transition: all 0.3s;
+}
+
+/* paste the rest of your CSS for cards, charts, tables, responsive, etc. */
