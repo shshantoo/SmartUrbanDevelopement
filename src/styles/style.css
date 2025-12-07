@@ -232,3 +232,6 @@ th{ background:#2563eb; color:#fff; }
   .dashboard-grid{ grid-template-columns:1fr; }
   .top-bar{ flex-direction:column; align-items:flex-start; gap:12px; }
 }
+.app-root { display:flex; min-height:100vh; }
+.sidebar { width: var(--sidebar-width); position: fixed; height: 100vh; }
+.main-content { margin-left: var(--sidebar-width); padding: 20px; }

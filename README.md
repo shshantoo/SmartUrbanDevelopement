@@ -1,73 +1,120 @@
-# React + TypeScript + Vite
+# Smart Urban Development — Dashboard + MySQL (phpMyAdmin) Setup Guide
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project uses:
+- **Frontend:** React + Vite
+- **Backend:** Node.js + Express
+- **Database:** MySQL (via XAMPP) managed with **phpMyAdmin**
 
-Currently, two official plugins are available:
+> Important: React does **not** connect to MySQL directly.  
+> React calls the **backend API**, and the backend reads/writes MySQL.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 1) Prerequisites
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Install:
+- Node.js (LTS)
+- Git
+- XAMPP (Apache + MySQL + phpMyAdmin)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 2) Clone the repository
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+```bash
+git clone <YOUR_REPO_URL>
+cd <YOUR_PROJECT_FOLDER>
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+# 2) What to Modify — File-by-File (Most Important Section)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## FRONTEND (React)
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### ✅ `src/pages/Dashboard.tsx`
+**Purpose:** Main dashboard layout + sidebar routing (switches pages/components)
+
+Modify when you want to:
+- Add new page keys (ex: `water`, `publicTransport`)
+- Change which component shows for each menu item
+- Change menu labels (sidebar text)
+
+---
+
+### ✅ `src/components/Sidebar.tsx`
+**Purpose:** Sidebar UI (menu sections, icons, active highlight)
+
+Modify when you want to:
+- Add/remove sidebar menu items
+- Change icons
+- Change sidebar behavior (disabled items, layout)
+
+---
+
+### ✅ `src/components/TopBar.tsx`
+**Purpose:** Top bar UI (title, admin profile, notifications badge)
+
+Modify when you want to:
+- Change header title/subtitle
+- Change user info UI
+- Add search/filter inputs at top
+
+---
+
+### ✅ `src/components/DashboardHome.tsx`
+**Purpose:** Dashboard page content only (charts/cards on dashboard)
+
+Modify when you want to:
+- Add more dashboard cards
+- Replace demo chart with real chart data later
+- Add KPIs (Total reports, Active alerts, etc.)
+
+---
+
+### ✅ `src/components/ServiceTable.tsx`
+**Purpose:** Service pages (Traffic/Parking/etc.) table + button actions
+
+Modify when you want to:
+- Change **what happens on Add/Edit/Delete**
+- Add real forms (modal, inputs)
+- Change table columns
+- Display database rows
+
+> **Button actions are coded here** (onClick handlers), but they call the backend.
+
+---
+
+### ✅ `src/lib/api.ts`
+**Purpose:** Central place for frontend API calls (`fetch`)
+
+Modify when you want to:
+- Add new backend endpoints (e.g., `/api/traffic/reports`)
+- Rename endpoints
+- Add auth headers later
+- Keep API code out of components (clean structure)
+
+---
+
+### ✅ `src/styles/dashboard.css`
+**Purpose:** All CSS (combined in one file)
+
+Modify when you want to:
+- Change theme colors
+- Change spacing, card design, responsiveness
+- Add new page styling (keep future page styles here too)
+
+---
+
+### ✅ `vite.config.ts`
+**Purpose:** Proxy frontend `/api` calls to backend during development
+
+Modify when you want to:
+- Change backend port (if backend runs on a different port)
+- Ensure `/api` calls work without CORS issues
+
+Example:
+```ts
+server: {
+  proxy: { "/api": "http://localhost:5000" }
+}

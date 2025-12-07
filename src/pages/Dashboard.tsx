@@ -1,5 +1,3 @@
-/* These lines of code are importing various components and functions from different files in a
-TypeScript React project. Here's a breakdown of each import statement: */
 import { useMemo, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import type { MenuItemConfig } from "../components/Sidebar";
@@ -15,7 +13,10 @@ export type PageKey =
   | "waste"
   | "energy"
   | "air"
-  | "emergency";
+  | "emergency"
+  | "admin"
+  | "it"
+  | "settings";
 
 export default function Dashboard() {
   const menu = useMemo<MenuItemConfig[]>(
